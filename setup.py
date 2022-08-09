@@ -1,6 +1,12 @@
 from monitorcontrol import get_monitors
 import time, os.path, json, win32com.client, os, ctypes, shutil
 
+def get_usb_devices():
+    wmi = win32com.client.GetObject ("winmgmts:")
+    all_usb = wmi.InstancesOf("Win32_USBHub")
+    all_usb = [x.DeviceId for x in all_usb]
+    return all_usb
+
 usb_connected_source = input('What should the source be if the USB switch is connected? (DP1, DP2, HDMI1, HDMI2, DVI1, DVI2) ')
 usb_disconnected_source = input('What should the source be if the USB switch is disconnected? (DP1, DP2, HDMI1, HDMI2, DVI1, DVI2) ')
 input("Enable your USB switch for this device and press enter ")
